@@ -21,12 +21,11 @@ public class Main {
 
             //BigInteger cardNbr = new BigInteger(line);
 
-          //  if (indexOfX == 15) {
+            if (indexOfX == 15) {
                 System.out.println(MathOperations.checksum(line));
-           /* } else {
-                System.out.println(MathOperations.valueOfX(line, indexOfX));
-            }*/
-        }
+            } else {
+				System.out.println(MathOperations.valueOfX(line, indexOfX));
+            }
         }
     }
-
+}
