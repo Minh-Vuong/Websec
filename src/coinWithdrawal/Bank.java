@@ -2,6 +2,7 @@ package coinWithdrawal;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,6 +11,7 @@ public class Bank {
 	private BigInteger p, q, d;
 	public BigInteger n, e;
 	public ArrayList<Integer>selectedValues;
+
 	
 	public ArrayList <Integer>pickRandomValues(){
 		int temp1 = 0;
