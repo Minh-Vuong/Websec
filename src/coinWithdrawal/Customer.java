@@ -6,14 +6,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class Customer {
-	private int [] quadruple;
+	private int[] quadruple;
 	private int id;
 	private MessageDigest md;
-	private ArrayList<BigInteger>signatures, list;
-	private ArrayList<Integer>randomI;
+	private ArrayList<BigInteger> signatures, list, bList;
+	private ArrayList<Integer> randomI;
 	private BigInteger x, y, e, n, modn;
+	private ArrayList<int[]> twoKQuad;
 
-	public Customer() throws NoSuchAlgorithmException{
+	public Customer() throws NoSuchAlgorithmException {
 		md = MessageDigest.getInstance("SHA-1");
 		id = 1;
 		this.signatures = signatures;
@@ -21,11 +22,39 @@ public class Customer {
 		this.e = e;
 		this.n = n;
 	}
-	
-	public void signedBlindSignatures(ArrayList<BigInteger>signatures){
-		this.signatures = signatures;
+
+	public BigInteger calcX(int a, int c) {
+		String outputY = Integer.toString(a + c);
+		md.update(outputY.getBytes());
+		BigInteger output = new BigInteger(md.digest());
+		return output;
 	}
-	
-	
-	
+
+	public BigInteger calcY(int a, int d) {
+		int temp = a ^ d;
+		String outputX = Integer.toString(temp + d);
+		md.update(outputX.getBytes());
+		BigInteger output = new BigInteger(md.digest());
+		return output;
+	}
+
+	public void calcB(){
+		for (int[] array : twoKQuad){
+			x = calcX(array[0], array[1]);
+			y = calcY(array[0], array[2]);
+			BigInteger calcTemp = mathoperation(x, y);
+			BigInteger R = BigInteger.valueOf(array[3]).pow(e.intValue());
+			BigInteger B = R.multiply(calcTemp).mod(modn);
+
+			bList.add(B);	
+		}
+	}
+
+	private BigInteger mathoperation(BigInteger x, BigInteger y) {
+		BigInteger a = x.xor(y);
+		//String str = String.format("%040x", a);
+		//System.out.println(a)
+		return a;
+	}
+
 }
