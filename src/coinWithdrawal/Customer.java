@@ -16,6 +16,10 @@ public class Customer {
 	public Customer() throws NoSuchAlgorithmException{
 		md = MessageDigest.getInstance("SHA-1");
 		id = 1;
+		this.signatures = signatures;
+		this.randomI = randomI;
+		this.e = e;
+		this.n = n;
 	}
 	
 	public void signedBlindSignatures(ArrayList<BigInteger>signatures){
