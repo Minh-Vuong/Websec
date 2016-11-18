@@ -9,7 +9,6 @@ public class Main {
 		try{
 		Customer Alice = new Customer(1, BigInteger.ONE, BigInteger.valueOf(2));
 		Bank bank = new Bank();
-		Alice.calcB();
 		if(!bank.checkB(Alice.createList())) {
 			System.out.println("Error with B. Fraud?");
 		}
