@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Customer {
-	private int[] quadruple;
 	private int id;
 	private MessageDigest md;
 	private ArrayList<BigInteger> signatures, bList, bSend;

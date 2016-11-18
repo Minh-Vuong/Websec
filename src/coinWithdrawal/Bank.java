@@ -15,6 +15,7 @@ public class Bank {
 	private ArrayList<BigInteger[]> quadvaules;
 	public ArrayList<Integer> selectedValues;
 	private MessageDigest md;
+	private int k;
 	
 	public Bank() throws NoSuchAlgorithmException{
 		customers = new ArrayList <Customer>();
@@ -24,7 +25,6 @@ public class Bank {
 		m = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
 		do {
 			e = new BigInteger(16, new Random());
-			//System.out.println("e: " + e);
 		}
 		while((e.compareTo(m) != 1) || (e.gcd(m).compareTo(BigInteger.valueOf(1)) != 0));
 		d = e.modInverse(m);
@@ -36,9 +36,7 @@ public class Bank {
 	public ArrayList<Integer> pickRandomValues() {
 		int temp1 = 0;
 		int index = 0;
-		Scanner sc = new Scanner(System.in);
-		System.out.println("how many random numbers?");
-		int k = sc.nextInt();
+		this.k = k;
 		Random rand = new Random();
 		ArrayList<Integer> number = new ArrayList<Integer>();
 		ArrayList<Integer> temp = new ArrayList<Integer>();
