@@ -10,7 +10,7 @@ public class Customer {
 	private int[] quadruple;
 	private int id;
 	private MessageDigest md;
-	private ArrayList<BigInteger> signatures, bList;
+	private ArrayList<BigInteger> signatures, bList, bSend;
 	private ArrayList<Integer> randomI;
 	private BigInteger x, y, e, n, modn, blind;
 	private ArrayList<BigInteger[]> twoKQuadruple;
@@ -24,7 +24,7 @@ public class Customer {
 		this.n = n;
 	}
 	
-    private void init(){
+    public void init(){
         ArrayList<BigInteger[]> list = new ArrayList<>();
         int counter = 0;
         Random rand = new Random();
@@ -76,9 +76,16 @@ public class Customer {
 		return a;
 	}
 	
-	public void sendB(){
-		
-	}
+	public ArrayList<BigInteger> sendB(int[] indexes) {
+			for (int i = 0; i < indexes.length; i++) {
+				bSend.add(bList.get(indexes[i]));
+			}
+			for (BigInteger b : bSend) {
+				System.out.println(b);
+			}
+			return bSend;
+		}
+	
 	
 	public void removeFromB(){
 		ArrayList<BigInteger[]> quadruples = twoKQuadruple;
@@ -104,6 +111,6 @@ public class Customer {
 	}
 
 	public void setBlindSignature(BigInteger blindSignature) {
-		this.blind = blind;
+		this.blind = blindSignature;
 	}
 }

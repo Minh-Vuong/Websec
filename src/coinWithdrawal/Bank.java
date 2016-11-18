@@ -103,6 +103,28 @@ public class Bank {
 	}
 	
 	public BigInteger signBlind(){
-		return null;
+		ArrayList<BigInteger> blindSignatures = new ArrayList<BigInteger>();
+		ArrayList<BigInteger> biToSign = bList;
+	
+		for(int i: selectedValues) {
+			biToSign.remove(i);
+		}
+		
+		//Begin blind signing
+		for(BigInteger bi: biToSign) {
+			BigInteger signed = bi.modPow(d, n);
+			blindSignatures.add(signed);
+		}
+		BigInteger blindSignature = multiplyBlindSignatures(blindSignatures);
+		return blindSignature;
 	}
-}
+
+	private BigInteger multiplyBlindSignatures(ArrayList<BigInteger> blindSignatures) {
+			BigInteger one = BigInteger.ONE;
+			for(BigInteger b: blindSignatures) {
+				one = one.multiply(b);
+			}
+			return one;
+		}
+	}
+
