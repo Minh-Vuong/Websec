@@ -4,27 +4,26 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Customer {
 	private int id;
 	private MessageDigest md;
-	private ArrayList<BigInteger> signatures, bList, bSend;
-	private ArrayList<Integer> randomI;
+	private ArrayList<BigInteger> bList, bSend;
 	private BigInteger x, y, e, n, modn, blind;
-	private ArrayList<BigInteger[]> twoKQuadruple;
+	private HashMap<BigInteger, BigInteger[]> twoKQuadruple;
 
-	public Customer() throws NoSuchAlgorithmException {
+	public Customer(int id, BigInteger e, BigInteger n) throws NoSuchAlgorithmException {
 		md = MessageDigest.getInstance("SHA-1");
-		id = 1;
-		this.signatures = signatures;
-		this.randomI = randomI;
+		this.id = id;
 		this.e = e;
 		this.n = n;
+		init();
 	}
 	
-    public void init(){
-        ArrayList<BigInteger[]> list = new ArrayList<>();
+    private void init(){
+        HahsMap<BigInteger, BigInteger[]> list = new ArrayList<>();
         int counter = 0;
         Random rand = new Random();
         while (counter < 2000) {
@@ -37,6 +36,8 @@ public class Customer {
         counter++;
         this.twoKQuadruple = list;
     }
+    
+  
 
 	public BigInteger calcX(BigInteger a, BigInteger c) {
 		a.add(c);
@@ -65,7 +66,6 @@ public class Customer {
 
 			bList.add(B);
 		}
-		// System.out.println(bList);
 	}
 
 	private BigInteger mathoperationF(BigInteger x, BigInteger y) {
@@ -85,6 +85,15 @@ public class Customer {
 			return bSend;
 		}
 	
+	
+	public ArrayList<BigInteger> revealValues(ArrayList<BigInteger>bValues){
+		ArrayList<BigInteger>temp = new ArrayList<>();
+		for(BigInteger b : bValues){
+			temp.add(twoKQuadruple.get(index));
+		}
+		return temp;
+		
+	}
 	
 	public void removeFromB(){
 		ArrayList<BigInteger[]> quadruples = twoKQuadruple;

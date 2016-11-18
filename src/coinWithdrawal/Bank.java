@@ -36,7 +36,7 @@ public class Bank {
 	public ArrayList<Integer> pickRandomValues() {
 		int temp1 = 0;
 		int index = 0;
-		this.k = k;
+		k = 1000;
 		Random rand = new Random();
 		ArrayList<Integer> number = new ArrayList<Integer>();
 		ArrayList<Integer> temp = new ArrayList<Integer>();
