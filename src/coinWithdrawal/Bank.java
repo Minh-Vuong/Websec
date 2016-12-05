@@ -1,4 +1,4 @@
-package coinWithdrawal;
+/* package coinWithdrawal;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -126,3 +126,4 @@ public class Bank {
 		}
 	}
 
+*/

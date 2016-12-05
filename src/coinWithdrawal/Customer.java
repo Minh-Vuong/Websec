@@ -1,4 +1,4 @@
-package coinWithdrawal;
+/*package coinWithdrawal;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -96,10 +96,11 @@ public class Customer {
 	}
 	
 	public void removeFromB(){
-		ArrayList<BigInteger[]> quadruples = twoKQuadruple;
+		//ArrayList<BigInteger[]> quadruples = twoKQuadruple;
 		for (BigInteger[] i : quadruples) {
 			quadruples.remove(i);
 		}
+		
 		BigInteger temp1 = BigInteger.ONE;
 		BigInteger temp2 = BigInteger.ONE;
 		for (BigInteger[] q : quadruples) {
@@ -122,3 +123,4 @@ public class Customer {
 		this.blind = blindSignature;
 	}
 }
+*/

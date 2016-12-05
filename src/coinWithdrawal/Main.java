@@ -1,4 +1,4 @@
-package coinWithdrawal;
+/*package coinWithdrawal;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
@@ -19,4 +19,4 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-}
+} */
