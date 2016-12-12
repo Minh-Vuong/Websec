@@ -37,24 +37,24 @@ public class OAEP {
 
 	private byte[] fromHextoByteArray(String input) {
 		if ((input.length() % 2) != 0)
-			throw new IllegalArgumentException("Input string must contain an even number of characters");
+			throw new IllegalArgumentException("Not even numbers!");
 
-		final byte result[] = new byte[input.length() / 2];
-		final char enc[] = input.toCharArray();
-		for (int i = 0; i < enc.length; i += 2) {
+		final byte output[] = new byte[input.length() / 2];
+		final char chars[] = input.toCharArray();
+		for (int i = 0; i < chars.length; i += 2) {
 			StringBuilder sb = new StringBuilder(2);
-			sb.append(enc[i]).append(enc[i + 1]);
-			result[i / 2] = (byte) Integer.parseInt(sb.toString(), 16);
+			sb.append(chars[i]).append(chars[i + 1]);
+			output[i / 2] = (byte) Integer.parseInt(sb.toString(), 16);
 		}
-		return result;
+		return output;
 	}
 
-	private String fromByteArrayToHex(byte[] bytes) {
-		StringBuilder sb = new StringBuilder();
-		for (byte b : bytes) {
-			sb.append(String.format("%02X", b));
+	private String fromByteArrayToHex(byte[] input) {
+		StringBuilder output = new StringBuilder();
+		for (byte b : input) {
+			output.append(String.format("%02X", b));
 		}
-		return sb.toString();
+		return output.toString();
 	}
 
 	private byte[] encryption(byte[] byteTemp, int intTemp) { // C = I2OSP

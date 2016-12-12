@@ -34,33 +34,29 @@ public class OAEP {
 		System.arraycopy(ConvertedEM, maskedSeed.length + 1, maskedDB, 0, maskedDB.length);
 
 		// Steg 3: Låt seedMask = MGF(maskedDB, hLen)
-		byte[] seedMask = MGF(maskedDB, md.getDigestLength());
+		byte[] seedMask = MGF1(maskedDB, md.getDigestLength());
 
-		// Steg 4: Låt seed = maskedSeed \xor seedmask
+		// Steg 4: Låt seed = maskedSeed \xor seedMask
 		byte[] seed = xor(maskedSeed, seedMask);
 
 		// Steg 5: låt dbMask = MGF(seed, k - hlen -1)
-		byte[] dbMask = MGF(seed, k - md.getDigestLength() - 1);
+		byte[] dbMask = MGF1(seed, k - md.getDigestLength() - 1);
 
 		// Steg 6: låt DB = maskedDB \xor dbMask
 		byte[] DB = xor(maskedDB, dbMask);
 
 		// Steg 7: separera DB till EN oktet sträng lHash' av längden hLen
 		// en paddingsträng, och meddelandet M DB = lHash' || PS || 0x01 || M
-		Byte b = new Byte((byte) 0x01);
+		Byte One = new Byte((byte) 0x01);
 		byte[] M = null;
 		for (int i = lHash.length; i < DB.length; i++) {
 			Byte a = DB[i];
-			if (a.compareTo(b) == 0) {
+			if (a.compareTo(One) == 0) {
 				M = new byte[DB.length - i - 1];
 				System.arraycopy(DB, i + 1, M, 0, M.length);
 			}
 		}
-
 		System.out.println("Decoded string: " + fromByteArrayToHex(M));
-		// System.out.println("maskedSeed: " + fromByteArrayToHex(maskedSeed));
-		// System.out.println("maskedDB: " + fromByteArrayToHex(maskedDB));
-
 	}
 
 	public void encode(String M, String seed) { // s 21-22. för beskrivning
@@ -86,28 +82,25 @@ public class OAEP {
 
 		System.arraycopy(temp, 0, DB, 0, temp.length);
 
-		byte[] convertedSeed = fromHextoByteArray(seed);
+		byte[] byteSeed = fromHextoByteArray(seed);
 
 		// Steg 5: dbMask = MGF(seed, k - hlen- 1)
-		byte[] dbMask = MGF(convertedSeed, (k - md.getDigestLength() - 1));
+		byte[] dbMask = MGF1(byteSeed, (k - md.getDigestLength() - 1));
 
 		// Steg 6: maskedDB = DB \xor dbMask
 		byte[] maskedDB = xor(DB, dbMask);
 
 		// Steg 7: seedMask = MGF(maskedDB, hLen)
-		byte[] seedMask = MGF(maskedDB, md.getDigestLength());
+		byte[] seedMask = MGF1(maskedDB, md.getDigestLength());
 
 		// Steg 8: maskedSeed = seed \xor seedmask
-		byte[] maskedSeed = xor(convertedSeed, seedMask);
+		byte[] maskedSeed = xor(byteSeed, seedMask);
 
 		// Steg 9: SKapa en singel octet med hexadecimalerna EM = 0x00 ||
 		// maskedSeed || maskedDB med längden k
 		byte[] EM = link(link(new byte[] { 0x00 }, maskedSeed), maskedDB);
 
 		System.out.println("Encoded string: " + fromByteArrayToHex(EM));
-		// System.out.println("maskedSeed: " + toHex(maskedSeed));
-		// System.out.println("maskedDB: " + toHex(maskedDB));
-		// System.out.println("-----");
 
 	}
 
@@ -160,7 +153,7 @@ public class OAEP {
 		return XORD;
 	}
 
-	private byte[] MGF(byte[] seed, int maskLen) {
+	private byte[] MGF1(byte[] seed, int maskLen) {
 		int ceil = (maskLen + md.getDigestLength() - 1) / md.getDigestLength();
 		byte[] T = new byte[0];
 		for (int i = 0; i < ceil; i++) {
