@@ -8,13 +8,10 @@ public class OAEP {
 	private int k;
 
 	public OAEP() {
-
 		k = 128;
-		md = null;
 		try {
 			md = MessageDigest.getInstance("SHA-1");
 		} catch (NoSuchAlgorithmException e) {
-
 			e.printStackTrace();
 		}
 
