@@ -21,7 +21,7 @@ public class OAEP {
 		// Få EM och få ut en decodad version utav EM
 
 		// Steg 1: Om L inte används så kör lHash = Hash (L)
-		byte[] ConvertedEM = fromHextoByteArray(EM);
+		byte[] byteEM = fromHextoByteArray(EM);
 		String L = "";
 		md.update(fromHextoByteArray(L));
 		byte[] lHash = md.digest();
@@ -30,8 +30,8 @@ public class OAEP {
 
 		// Steg 2: Seperera meddelandet till en singel oktet Y så att EM = Y ||
 		// maskedSeed || maskedDB
-		System.arraycopy(ConvertedEM, 1, maskedSeed, 0, maskedSeed.length);
-		System.arraycopy(ConvertedEM, maskedSeed.length + 1, maskedDB, 0, maskedDB.length);
+		System.arraycopy(byteEM, 1, maskedSeed, 0, maskedSeed.length);
+		System.arraycopy(byteEM, maskedSeed.length + 1, maskedDB, 0, maskedDB.length);
 
 		// Steg 3: Låt seedMask = MGF(maskedDB, hLen)
 		byte[] seedMask = MGF1(maskedDB, md.getDigestLength());
