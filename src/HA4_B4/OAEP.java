@@ -104,7 +104,7 @@ public class OAEP {
 
 	}
 
-	private byte[] fromHextoByteArray(String input) {
+	public byte[] fromHextoByteArray(String input) {
 		if ((input.length() % 2) != 0)
 			throw new IllegalArgumentException("Input string must contain an even number of characters");
 
